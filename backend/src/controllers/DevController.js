@@ -1,5 +1,6 @@
 const axios = require('axios');
 const Dev = require('../models/Dev');
+const parseStringAsArray = require('../utils/parseStringAsArray');
 
 module.exports = {
     list: async (request, response) => {
@@ -23,12 +24,14 @@ module.exports = {
             coordinates: [longitude, latitude]
         };
 
+        const techsArray = parseStringAsArray(techs);
+
         const dev = await Dev.create({
             github_username,
             name: name ? name : login,
             avatar_url,
             bio,
-            techs,
+            techs: techsArray,
             location
         });
 
